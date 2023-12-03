@@ -64,47 +64,11 @@ end
 
 #replace any number names with their number in a string going left to right on the 
 function replace_num_names(string::String)
-    # Find all occurrences
+    global num_names
     global number_map
-    occurrences = []
-    for (name, num) in number_map
-        index = findfirst(name, string)
-        if !isnothing(index)
-            push!(occurrences, (first(index), name, number_map[name]))
-        end
+    for num_name in num_names
+        string = replace(string, num_name => number_map[num_name])
     end
-
-    if length(occurrences) > 0
-        # Sort by index positions
-        sort!(occurrences, by=x -> x[1])
-
-        # Perform replacements in sorted order
-        (_, name, num) = occurrences[1]
-        string = replace(string, name => num)
-    end
-
-    # Repeat the logic for final last number
-    global number_map
-    occurrences = []
-    for (name, num) in number_map
-        index = findlast(name, string)
-        if !isnothing(index)
-            push!(occurrences, (first(index), name, number_map[name]))
-        end
-    end
-
-    if length(occurrences) > 0
-
-
-        # Sort by index positions
-        sort!(occurrences, by=x -> x[1])
-
-        # Perform replacements in sorted order
-        (_, name, num) = occurrences[end]
-        string = replace(string, name => num)
-
-    end
-
     return string
 end
 
