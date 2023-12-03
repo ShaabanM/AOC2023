@@ -4,15 +4,15 @@
 nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 num_names = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 const number_map = Dict(
-    "one" => "1",
-    "two" => "2",
-    "three" => "3",
-    "four" => "4",
-    "five" => "5",
-    "six" => "6",
-    "seven" => "7",
-    "eight" => "8",
-    "nine" => "9",
+    "one" => "o1e",
+    "two" => "t20",
+    "three" => "t3e",
+    "four" => "f4r",
+    "five" => "f5e",
+    "six" => "s6x",
+    "seven" => "s7n",
+    "eight" => "e8t",
+    "nine" => "n9e",
 )
 
 # Read the input file
@@ -75,15 +75,12 @@ function replace_num_names(string::String)
     end
 
     if length(occurrences) > 0
-
-
         # Sort by index positions
         sort!(occurrences, by=x -> x[1])
 
         # Perform replacements in sorted order
-        (_, name, num) = occurrences[end]
-        string = replace(string, name => num; count=1)
-
+        (_, name, num) = occurrences[1]
+        string = replace(string, name => num)
     end
 
     # Repeat the logic for final last number
