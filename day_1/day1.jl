@@ -47,13 +47,16 @@ function combine_digits(chars)
     end
 end
 
-lines = read_file("input")
-numbers = []
-acc = 0
-for line in lines
-    global acc # need to declare that in this scope I want to inherit the global var
-    digits = get_digits(line)
-    acc += (str_to_int(combine_digits(digits)))
+# Function that solves part 1 of the puzzle
+function part_1()
+    lines = read_file("input")
+    acc = 0
+    for line in lines
+        # global acc # need to declare that in this scope I want to inherit the global var if used out of function
+        digits = get_digits(line)
+        acc += (str_to_int(combine_digits(digits)))
+    end
+    print("The answer to part 1 is: ", acc)
 end
 
-print("The answer to part 1 is: ", acc)
+part_1()
