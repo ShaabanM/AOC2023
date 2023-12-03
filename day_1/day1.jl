@@ -5,7 +5,7 @@ nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 num_names = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 const number_map = Dict(
     "one" => "o1e",
-    "two" => "t20",
+    "two" => "t2o",
     "three" => "t3e",
     "four" => "f4r",
     "five" => "f5e",
@@ -62,7 +62,7 @@ function combine_digits(chars)
     end
 end
 
-#replace any number names with their number in a string going left to right on the 
+#replace any number names with their number in a string
 function replace_num_names(string::String)
     global num_names
     global number_map
@@ -95,8 +95,6 @@ function part_2()
     end
     println("The answer to part 2 is: ", acc)
 end
-
-
 
 # Script 
 part_1()
