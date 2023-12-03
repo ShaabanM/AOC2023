@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 # This script provides a solution to the first day of AOC 2023
 
-nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 num_names = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 const number_map = Dict(
     "one" => "1",
@@ -67,30 +67,45 @@ function replace_num_names(string::String)
     # Find all occurrences
     global number_map
     occurrences = []
-    occurrences_last = []
     for (name, num) in number_map
         index = findfirst(name, string)
-        index_last = findlast(name, string)
         if !isnothing(index)
             push!(occurrences, (first(index), name, number_map[name]))
-            push!(occurrences_last, (first(index_last), name, number_map[name]))
         end
     end
 
-    # Sort by index positions
-    sort!(occurrences, by=x -> x[1])
-    sort!(occurrences_last, by=x -> x[1])
+    if length(occurrences) > 0
 
-    if length(occurrences) >= 1
-        # Perform replacement on the first count of the first occuring instance
-        (_, name, num) = occurrences[1]
+
+        # Sort by index positions
+        sort!(occurrences, by=x -> x[1])
+
+        # Perform replacements in sorted order
+        (_, name, num) = occurrences[end]
         string = replace(string, name => num; count=1)
+
     end
 
-    if length(occurrences_last) >= 1
-        # repeat for last occuring digit but now do it for all occurances
-        (_, name, num) = occurrences_last[end]
+    # Repeat the logic for final last number
+    global number_map
+    occurrences = []
+    for (name, num) in number_map
+        index = findlast(name, string)
+        if !isnothing(index)
+            push!(occurrences, (first(index), name, number_map[name]))
+        end
+    end
+
+    if length(occurrences) > 0
+
+
+        # Sort by index positions
+        sort!(occurrences, by=x -> x[1])
+
+        # Perform replacements in sorted order
+        (_, name, num) = occurrences[end]
         string = replace(string, name => num)
+
     end
 
     return string
