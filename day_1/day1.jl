@@ -82,13 +82,13 @@ function replace_num_names(string::String)
     sort!(occurrences_last, by=x -> x[1])
 
     if length(occurrences) >= 1
-        # Perform replacements in sorted order
+        # Perform replacement on the first count of the first occuring instance
         (_, name, num) = occurrences[1]
         string = replace(string, name => num; count=1)
     end
 
     if length(occurrences_last) >= 1
-        # repeat for last occurance
+        # repeat for last occuring digit but now do it for all occurances
         (_, name, num) = occurrences_last[end]
         string = replace(string, name => num)
     end
