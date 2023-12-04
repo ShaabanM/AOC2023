@@ -34,6 +34,9 @@ struct Game
     game_id::Int
     n_turns::Int
     cube_sets::Array{CubeSet}
+    min_red::Int
+    min_green::Int
+    min_blue::Int
 
     function Game(game_string)
         # Get the game name and the turns string
@@ -46,11 +49,25 @@ struct Game
 
         # create a cube set for every turn
         cube_sets = []
+        min_red = 0
+        min_green = 0
+        min_blue = 0
         for turn in turns
-            push!(cube_sets, CubeSet(turn))
+            set = CubeSet(turn)
+            push!(cube_sets, set)
+            if set.red > min_red
+                min_red = set.red
+            end
+            if set.green > min_green
+                min_green = set.green
+            end
+            if set.blue > min_blue
+                min_blue = set.blue
+            end
         end
-        new(game, n_turns, cube_sets)
+        new(game, n_turns, cube_sets, min_red, min_green, min_blue)
     end
+
 end
 
 # Function to determine whether or not a game is possible
@@ -76,4 +93,17 @@ function part_1()
     println("Part 1 solution is ", id_sum)
 end
 
+
+function part_2()
+    lines = Utils.read_file_strings("input")
+    sum = 0
+    for line in lines
+        game = Game(line)
+        sum += (game.min_blue * game.min_green * game.min_red)
+    end
+
+    println("Part 2 solution is ", sum)
+end
+
 part_1()
+part_2()
